@@ -9,7 +9,7 @@ router.post("/addWorkout", verify, workoutController.addWorkout);
 
 router.get("/getMyWorkouts", verify, workoutController.getMyWorkouts);
 
-router.patch("/updateWorkout/:workoutId", verify, workoutController.updateWorkout);
+router.put("/updateWorkout/:workoutId", verify, workoutController.updateWorkout);
 
 router.delete("/deleteWorkout/:workoutId", verify, workoutController.deleteWorkout);
 

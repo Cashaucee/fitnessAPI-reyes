@@ -84,3 +84,21 @@ module.exports.loginUser = (req, res) => {
         return res.status(400).send(false);
     }
 }
+
+module.exports.getUserDetails = async (req, res) => {
+    try{
+        const userId = req.user.id
+
+        let details = await User.find({_id: userId})
+
+        return res.status(200).json({
+            userDetails: details
+        });
+    } catch (error){
+        return res.status(500).json({
+            error: 'Server Error',
+            message: error.message
+        })
+    }
+
+}

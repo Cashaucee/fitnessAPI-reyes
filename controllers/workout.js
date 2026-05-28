@@ -38,7 +38,7 @@ module.exports.addWorkout = async (req, res) => {
 
 }
 
-module.exports.getMyWorkouts = (req, res) => {
+module.exports.getMyWorkouts = async (req, res) => {
     try{
         const userId = req.user.id
 
@@ -56,7 +56,7 @@ module.exports.getMyWorkouts = (req, res) => {
 
 }
 
-module.exports.updateWorkout = (req, res) => {
+module.exports.updateWorkout = async (req, res) => {
 
     try{
         const userId = req.user.id
@@ -67,7 +67,7 @@ module.exports.updateWorkout = (req, res) => {
             duration
         }
 
-        const updatedWorkout = Workout.findOneAndUpdate({ _id: req.params.workoutId, userId: userId }, updatedDetails, { new: true })
+        const updatedWorkout = await Workout.findOneAndUpdate({ _id: req.params.workoutId, userId: userId }, updatedDetails, { new: true })
 
         if(!updatedWorkout){
             return res.status(404).json({
@@ -88,12 +88,12 @@ module.exports.updateWorkout = (req, res) => {
     }
 }
 
-module.exports.deleteWorkout = (req, res) => {
+module.exports.deleteWorkout = async (req, res) => {
 
     try{
         const userId = req.user.id
 
-        const deletedWorkout = Workout.findOneAndDelete({ _id: req.params.workoutId, userId: userId })
+        const deletedWorkout = await Workout.findOneAndDelete({ _id: req.params.workoutId, userId: userId })
 
         if(!deletedWorkout){
             return res.status(404).json({
@@ -114,7 +114,7 @@ module.exports.deleteWorkout = (req, res) => {
     }
 }
 
-module.exports.completeWorkoutStatus = (req, res) => {
+module.exports.completeWorkoutStatus = async (req, res) => {
 
     try{
         const userId = req.user.id
@@ -123,7 +123,7 @@ module.exports.completeWorkoutStatus = (req, res) => {
             status: "completed"
         }
 
-        const updatedWorkout = Workout.findOneAndUpdate({ _id: req.params.workoutId, userId: userId }, updatedStatus, { new: true })
+        const updatedWorkout = await Workout.findOneAndUpdate({ _id: req.params.workoutId, userId: userId }, updatedStatus, { new: true })
 
         if(!updatedWorkout){
             return res.status(404).json({
