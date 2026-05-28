@@ -37,10 +37,6 @@ module.exports.registerUser = (req, res) => {
     if (!req.body.email.includes("@")){
         return res.status(400).send(false);
     }
-    // Checks if the mobile number has the correct number of characters
-    else if (req.body.mobileNo.length !== 11){
-        return res.status(400).send(false);
-    }
     // Checks if the password has atleast 8 characters
     else if (req.body.password.length < 8) {
         return res.status(400).send(false);
@@ -48,16 +44,12 @@ module.exports.registerUser = (req, res) => {
     } else {
 
         let newUser = new User({
-            firstName : req.body.firstName,
-            lastName : req.body.lastName,
             email : req.body.email,
-            mobileNo : req.body.mobileNo,
-            // 10 is the value provided as the number of "salt" rounds that the bcrypt algorithm will run in order to encrypt the password
             password : bcrypt.hashSync(req.body.password, 10)
         })
 
         return newUser.save()
-        .then((result) => res.status(201).send(result))
+        .then((result) => res.status(201).json({ message: "Registered Successfully"}))
         .catch(error => errorHandler(error, req, res));
         
     }
